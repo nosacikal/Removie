@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Removie</string>
+    <string name="title">Removie</string>
+    <string name="subtitle">Find Your Movies Now</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="photogallery">Photogallery</string>
+    <string name="videos_and_trailers">Videos and Trailers</string>
+    <string name="release">Release</string>
+    <string name="cast">Cast</string>
+    <string name="top_rated">Top Rated</string>
+</resources>
