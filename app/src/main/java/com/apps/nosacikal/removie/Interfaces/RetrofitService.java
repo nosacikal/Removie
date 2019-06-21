@@ -37,4 +37,8 @@ public interface RetrofitService {
     @GET("movie/{movie_id}/videos")
     Call<MovieVideos> getMovieVideossById(@Path("movie_id") int movie_id, @Query("api_key") String api_key);
 
+    // service untuk search movie
+    @GET("search/movie")
+    Call<MovieModel> getMoviesByQuery(@Query("api_key") String api_key, @Query("query") String query);
+
 }

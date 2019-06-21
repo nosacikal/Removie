@@ -19,7 +19,7 @@ public class MovieModelResult {
     private String poster_path;
     private String original_language;
     private String original_title;
-    private List<Integer> genre_ids = null;
+    private List<Integer> genre_ids;
     private String backdrop_path;
     private Boolean adult;
     private String overview;

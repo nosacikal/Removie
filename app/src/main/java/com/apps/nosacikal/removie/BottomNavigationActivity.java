@@ -33,25 +33,17 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
 
                     switch (menuItem.getItemId()) {
-                        case R.id.nav_home:
+                        case R.id.nav_movie:
                             selectedFragment = new MovieListFragment();
                             break;
 
-                        case R.id.nav_daily:
-                            selectedFragment = new MovieListFragment();
+                        case R.id.nav_search:
+                            selectedFragment = new SearchMovieFragment();
                             break;
 
-                        case R.id.nav_gallery:
+                        case R.id.nav_fav:
                             selectedFragment = new MovieListFragment();
                             break;
-//
-//                        case R.id.nav_music_video:
-//                            selectedFragment = new MusicVideoFragment();
-//                            break;
-//
-//                        case R.id.nav_profile:
-//                            selectedFragment = new ProfileFragment();
-//                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
