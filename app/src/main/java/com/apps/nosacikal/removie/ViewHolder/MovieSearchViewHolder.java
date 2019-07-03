@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import com.apps.nosacikal.removie.R;
 import com.flaviofaria.kenburnsview.KenBurnsView;
@@ -21,20 +22,25 @@ import com.squareup.picasso.Picasso;
 
 public class MovieSearchViewHolder extends RecyclerView.ViewHolder {
 
-    private KenBurnsView posterImageView;
-    public AppCompatTextView posterTitle;
+//    private KenBurnsView posterImageView;
+//    public AppCompatTextView posterTitle;
+
+    private KenBurnsView searchImageResult;
+    public TextView searchTitleResult;
+    public TextView searchVoteAverage;
 
     public MovieSearchViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        posterImageView = itemView.findViewById(R.id.poster_image_view);
-        posterTitle = itemView.findViewById(R.id.poster_title);
+        searchImageResult = itemView.findViewById(R.id.search_image_result);
+        searchTitleResult = itemView.findViewById(R.id.search_title_result);
+        searchVoteAverage = itemView.findViewById(R.id.search_vote_average);
 
         RandomTransitionGenerator generator = new RandomTransitionGenerator(1000, new DecelerateInterpolator());
-        posterImageView.setTransitionGenerator(generator);
+        searchImageResult.setTransitionGenerator(generator);
     }
 
     public void setPosterImageView(Context context, String posterUrl) {
-        Picasso.with(context).load(posterUrl).into(posterImageView);
+        Picasso.with(context).load(posterUrl).into(searchImageResult);
     }
 }

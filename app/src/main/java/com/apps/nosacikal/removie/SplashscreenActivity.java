@@ -37,7 +37,7 @@ public class SplashscreenActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashscreenActivity.this, BottomNavigationActivity.class));
+                startActivity(new Intent(SplashscreenActivity.this, Walkthrough.class));
                 finish();
             }
         }, 4000);

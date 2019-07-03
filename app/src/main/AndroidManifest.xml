@@ -3,6 +3,7 @@
     package="com.apps.nosacikal.removie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchMovieFragment"></activity>
+        <activity android:name=".Walkthrough"></activity>
+        <!-- <activity android:name=".SearchMovieFragment"></activity> -->
         <activity
             android:name=".VideoPlayActivity"
             android:theme="@style/AppTheme.Activity" />

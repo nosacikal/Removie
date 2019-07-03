@@ -29,6 +29,7 @@ public class MoviePosterImageAdapter extends RecyclerView.Adapter<ImageViewHolde
 
     private Activity activity;
     private List<MovieImagesBackdropsAndPoster> movieImagesBackdropsAndPostersList;
+    private final int limit = 10;
 
     public MoviePosterImageAdapter(Activity activity, List<MovieImagesBackdropsAndPoster> movieImagesBackdropsAndPostersList) {
         this.activity = activity;
@@ -64,6 +65,10 @@ public class MoviePosterImageAdapter extends RecyclerView.Adapter<ImageViewHolde
 
     @Override
     public int getItemCount() {
-        return movieImagesBackdropsAndPostersList.size();
+        if (movieImagesBackdropsAndPostersList.size() > limit) {
+            return limit;
+        } else {
+            return movieImagesBackdropsAndPostersList.size();
+        }
     }
 }

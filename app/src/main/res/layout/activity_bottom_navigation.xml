@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundNav"
     tools:context=".BottomNavigationActivity">
 
     <FrameLayout
@@ -18,9 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/background"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
+        app:itemIconTint="@drawable/bottom_nav_color"
+        app:itemTextColor="@drawable/bottom_nav_color"
+        app:itemBackground="@color/backgroundNav"
         app:menu="@menu/bottom_navigation" />
 
 </RelativeLayout>

@@ -41,9 +41,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
                             selectedFragment = new SearchMovieFragment();
                             break;
 
-                        case R.id.nav_fav:
-                            selectedFragment = new MovieListFragment();
-                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();

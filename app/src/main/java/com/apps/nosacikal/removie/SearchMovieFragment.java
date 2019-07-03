@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -66,7 +67,8 @@ public class SearchMovieFragment extends Fragment {
         querySearchButton = view.findViewById(R.id.query_search_button);
         resultRecyclerView = view.findViewById(R.id.result_recycler_view);
 
-        resultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        resultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        resultRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         Paper.init(Objects.requireNonNull(getContext()));
 
@@ -118,9 +120,8 @@ public class SearchMovieFragment extends Fragment {
                     } else {
                         queryEditText.setText("");
 
-                        // ambil query dan buang spassi
+                        // ambil query dan buang spasi
                         String finalQuery = query.replaceAll(" ", "+");
-
 
                         // fetch data dari retrofit
                         Call<MovieModel> movieResponseCall = retrofitService.getMoviesByQuery(BuildConfig.THE_MOVIE_DB_API_KEY, finalQuery);
@@ -137,11 +138,10 @@ public class SearchMovieFragment extends Fragment {
 
                                     resultRecyclerView.setAdapter(movieSearchAdapter);
 
-
                                     // store result ke offline database (paper database)
                                     Paper.book().write("cache", new Gson().toJson(movieResponse));
 
-                                    // store category untuk set spinner
+                                    // store search movie
                                     Paper.book().write("source", "movie");
 
                                 }

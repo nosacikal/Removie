@@ -1,11 +1,13 @@
 package com.apps.nosacikal.removie;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
@@ -18,7 +20,8 @@ import android.widget.Toast;
 import com.apps.nosacikal.removie.Adapter.MoviePosterImageAdapter;
 import com.apps.nosacikal.removie.Adapter.MovieVideoAdapter;
 import com.apps.nosacikal.removie.Client.RetrofitClient;
-import com.apps.nosacikal.removie.Database.DbSqlite;
+import com.apps.nosacikal.removie.Database.FavoriteDatabase;
+import com.apps.nosacikal.removie.Database.FavoriteEntitas;
 import com.apps.nosacikal.removie.Interfaces.RetrofitService;
 import com.apps.nosacikal.removie.Models.MovieDetailModel;
 import com.apps.nosacikal.removie.Models.MovieDetailGenres;
@@ -56,6 +59,11 @@ import retrofit2.Response;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
+    public static FavoriteDatabase db;
+    private FavoriteEntitas favoriteEntitas;
+
+    List<FavoriteEntitas> favoriteEntitasList = new ArrayList<>();
+
     private KenBurnsView movieDetailBackdrop;
     private TextView movieDetailTitle;
     private TextView movieDetailGenres;
@@ -68,7 +76,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     private RecyclerView movieDetailImagesRecyclerView;
     private RecyclerView movieDetailVideoRecyclerView;
 
-    private DbSqlite localDb;
 
     private ImageButton movieDetailFavorite;
 
@@ -81,8 +88,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         final RetrofitService retrofitService = RetrofitClient.getClient().create(RetrofitService.class);
         ThumbnailLoader.initialize(BuildConfig.GOOGLE_CLOUD_API_KEY);
 
-        // favorite
-        localDb = new DbSqlite(this);
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                FavoriteDatabase.class, "favorite")
+                .allowMainThreadQueries().build();
 
         movieDetailBackdrop = findViewById(R.id.movie_detail_backdrop);
         movieDetailTitle = findViewById(R.id.movie_detail_title);
@@ -119,26 +128,49 @@ public class MovieDetailActivity extends AppCompatActivity {
                         final MovieDetailModel movieDetailModelResponse = response.body();
 
                         if (movieDetailModelResponse != null) {
+
                             prepareMovieDetail(movieDetailModelResponse);
 
-                            // add to favorite
-                            if (localDb.isFavorite(intent.getExtras().getString("id"))) {
+                            if (db.favoriteDao().tampilFavoriteById(intent.getExtras().getString("id"))) {
                                 movieDetailFavorite.setImageResource(R.drawable.ic_favorite_white);
                             }
 
                             movieDetailFavorite.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if (!localDb.isFavorite(intent.getExtras().getString("id"))) {
-                                        localDb.addToFavorite(intent.getExtras().getString("id"));
+                                    if (!db.favoriteDao().tampilFavoriteById(intent.getExtras().getString("id"))) {
+
+                                        favoriteEntitas = new FavoriteEntitas();
+                                        favoriteEntitas.setId(intent.getExtras().getString("id"));
+                                        favoriteEntitas.setTitle(intent.getExtras().getString("title"));
+
+                                        db.favoriteDao().tambahFavorite(favoriteEntitas);
+
+                                        Log.d("TAMBAH", "TAMBAH DATA");
+                                        Log.d("TAMBAH", "===========");
+
+                                        Log.e("TAMBAH", "NAMA : " + movieDetailModelResponse.getId());
+                                        Log.e("TAMBAH", "EMAIL : " + movieDetailModelResponse.getTitle());
+
+
                                         movieDetailFavorite.setImageResource(R.drawable.ic_favorite_white);
 
-                                        Toast.makeText(MovieDetailActivity.this, ""+movieDetailModelResponse.getTitle() + " Was Added to Favorite", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
-                                        localDb.removeFromFavorite(intent.getExtras().getString("id"));
+                                        Toast.makeText(MovieDetailActivity.this, "" + movieDetailModelResponse.getTitle() + " Was Added to Favorite", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        favoriteEntitas = new FavoriteEntitas();
+                                        favoriteEntitas.setId(intent.getExtras().getString("id"));
+                                        favoriteEntitas.setTitle(intent.getExtras().getString("title"));
+
+                                        db.favoriteDao().deleteFavorite(favoriteEntitas);
+
+                                        Log.d("DELETE", "DELETE DATA");
+                                        Log.d("DELETE", "===========");
+
+                                        Log.e("DELETE", "NAMA : " + movieDetailModelResponse.getId());
+                                        Log.e("DELETE", "EMAIL : " + movieDetailModelResponse.getTitle());
+
                                         movieDetailFavorite.setImageResource(R.drawable.ic_favorite_border);
-                                        Toast.makeText(MovieDetailActivity.this, ""+movieDetailModelResponse.getTitle() + " Was Removed from Favorite", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MovieDetailActivity.this, "" + movieDetailModelResponse.getTitle() + " Was Removed from Favorite", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

@@ -4,13 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".MovieListFragment"
-    >
+    tools:context=".MovieListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recomended_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/popular_movie"
@@ -29,7 +33,7 @@
             android:id="@+id/popular_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_24"/>
+            android:layout_marginStart="@dimen/dp_24" />
 
         <TextView
             android:id="@+id/toprated_movie"
@@ -48,7 +52,7 @@
             android:id="@+id/toprated_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_24"/>
+            android:layout_marginStart="@dimen/dp_24" />
 
     </LinearLayout>
 

@@ -127,7 +127,8 @@ public class MovieModelResult {
     }
 
     public String getBackdrop_path() {
-        return backdrop_path;
+        String baseUrl = "http://image.tmdb.org/t/p/w500";
+        return baseUrl + backdrop_path;
     }
 
     public void setBackdrop_path(String backdrop_path) {

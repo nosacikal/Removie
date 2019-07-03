@@ -8,6 +8,18 @@
     android:orientation="vertical"
     tools:context=".SearchMovieFragment">
 
+    <TextView
+        android:id="@+id/popular_movie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+        android:fontFamily="@font/roboto_thin"
+        android:text="@string/search_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_24" />
+
     <LinearLayout
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
@@ -19,12 +31,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:hint="@string/search_title"
+            android:hint="@string/find_movie_title"
             android:inputType="text"
             android:lines="1"
             android:padding="@dimen/dp_10"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="#393939" />
+            android:textColor="@android:color/white"
+            android:textColorHint="#393939"
+            android:textSize="@dimen/sp_18"
+            android:fontFamily="@font/roboto_regular"
+            android:theme="@style/SearchEditText"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/query_search_button"
@@ -40,6 +56,7 @@
         android:id="@+id/result_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_16"
         />
 
 </LinearLayout>

@@ -19,13 +19,13 @@ import com.squareup.picasso.Picasso;
  * AKB-2
  * */
 
-public class MoviePopularViewHolder extends RecyclerView.ViewHolder {
+public class MovieListViewHolder extends RecyclerView.ViewHolder {
 
     public KenBurnsView popularImage;
     public TextView popularTitle;
     public TextView voteAverage;
 
-    public MoviePopularViewHolder(@NonNull View itemView) {
+    public MovieListViewHolder(@NonNull View itemView) {
         super(itemView);
 
         popularImage = itemView.findViewById(R.id.popular_image);

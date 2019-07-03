@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.apps.nosacikal.removie.Models.MovieModelResult;
 import com.apps.nosacikal.removie.MovieDetailActivity;
 import com.apps.nosacikal.removie.R;
-import com.apps.nosacikal.removie.ViewHolder.MoviePopularViewHolder;
 import com.apps.nosacikal.removie.ViewHolder.MovieTopRatedViewHolder;
 
 import java.util.List;
