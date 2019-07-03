@@ -19,9 +19,11 @@ import com.apps.nosacikal.removie.Client.RetrofitClient;
 import com.apps.nosacikal.removie.Interfaces.RetrofitService;
 import com.apps.nosacikal.removie.Models.MovieModel;
 import com.apps.nosacikal.removie.Models.MovieModelResult;
+import com.apps.nosacikal.removie.Utils.ConnectivityHelper;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,23 +41,37 @@ public class MovieListFragment extends Fragment {
     private LinearLayout movieListLayout;
     private LinearLayout internetLayout;
 
+    private RecyclerView popularMovieRecyclerView;
+    private RecyclerView topRatedMovieRecyclerView;
+    private RecyclerView recomendedRecyclerView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.movie_list_fragment, container, false);
 
-        final RecyclerView popularMovieRecyclerView = view.findViewById(R.id.popular_recycler_view);
+        popularMovieRecyclerView = view.findViewById(R.id.popular_recycler_view);
         popularMovieRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        final RecyclerView topRatedMovieRecyclerView = view.findViewById(R.id.toprated_recycler_view);
+        topRatedMovieRecyclerView = view.findViewById(R.id.toprated_recycler_view);
         topRatedMovieRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        final RecyclerView recomendedRecyclerView = view.findViewById(R.id.recomended_recycler_view);
+        recomendedRecyclerView = view.findViewById(R.id.recomended_recycler_view);
         recomendedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
 
         movieListLayout = view.findViewById(R.id.movie_list_layout);
         internetLayout = view.findViewById(R.id.internet_layout);
+
+
+        if (ConnectivityHelper.isConnectedToNetwork(Objects.requireNonNull(getContext()))) {
+            //Show the connected screen
+            movieListLayout.setVisibility(View.VISIBLE);
+            internetLayout.setVisibility(View.GONE);
+        } else {
+            //Show disconnected screen
+            movieListLayout.setVisibility(View.GONE);
+            internetLayout.setVisibility(View.VISIBLE);
+        }
 
         final RetrofitService retrofitService = RetrofitClient.getClient().create(RetrofitService.class);
 
@@ -66,9 +82,6 @@ public class MovieListFragment extends Fragment {
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
                 MovieModel movieModel = response.body();
 
-
-
-
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
 
@@ -77,25 +90,12 @@ public class MovieListFragment extends Fragment {
 
                     MovieListAdapter movieListAdapter = new MovieListAdapter(getActivity(), movieModelResultList);
                     popularMovieRecyclerView.setAdapter(movieListAdapter);
-
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-
-                if (t instanceof IOException) {
-                    movieListLayout.setVisibility(View.GONE);
-                    internetLayout.setVisibility(View.VISIBLE);
-
-                    Toast.makeText(getContext(), "this is an actual network failure :(", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getContext(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                    // todo log to some central bug tracking service
-                }
-
+                Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,9 +104,6 @@ public class MovieListFragment extends Fragment {
         movieModelTopRatedCall.enqueue(new Callback<MovieModel>() {
             @Override
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
-
-
-
 
                 MovieModel movieModel = response.body();
 
@@ -118,23 +115,13 @@ public class MovieListFragment extends Fragment {
 
                     MovieTopRatedAdapter movieTopRatedAdapter = new MovieTopRatedAdapter(getActivity(), movieModelResultList);
                     topRatedMovieRecyclerView.setAdapter(movieTopRatedAdapter);
-
                 }
 
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-
-                if (t instanceof IOException) {
-                    movieListLayout.setVisibility(View.GONE);
-                    internetLayout.setVisibility(View.VISIBLE);
-
-                    Toast.makeText(getContext(), "this is an actual network failure :(", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getContext(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -162,17 +149,7 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-
-                if (t instanceof IOException) {
-                    movieListLayout.setVisibility(View.GONE);
-                    internetLayout.setVisibility(View.VISIBLE);
-
-                    Toast.makeText(getContext(), "this is an actual network failure :(", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getContext(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                }
-
+                Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
             }
         });
 
