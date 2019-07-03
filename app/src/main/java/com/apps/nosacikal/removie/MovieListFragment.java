@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.apps.nosacikal.removie.Adapter.MovieListAdapter;
@@ -19,6 +20,7 @@ import com.apps.nosacikal.removie.Interfaces.RetrofitService;
 import com.apps.nosacikal.removie.Models.MovieModel;
 import com.apps.nosacikal.removie.Models.MovieModelResult;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,6 +35,9 @@ import retrofit2.Response;
  * */
 
 public class MovieListFragment extends Fragment {
+
+    private LinearLayout movieListLayout;
+    private LinearLayout internetLayout;
 
     @Nullable
     @Override
@@ -49,6 +54,9 @@ public class MovieListFragment extends Fragment {
         recomendedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 
+        movieListLayout = view.findViewById(R.id.movie_list_layout);
+        internetLayout = view.findViewById(R.id.internet_layout);
+
         final RetrofitService retrofitService = RetrofitClient.getClient().create(RetrofitService.class);
 
         Call<MovieModel> movieModelPopularCall = retrofitService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_KEY);
@@ -58,16 +66,17 @@ public class MovieListFragment extends Fragment {
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
                 MovieModel movieModel = response.body();
 
+
+
+
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
+
+                    movieListLayout.setVisibility(View.VISIBLE);
+                    internetLayout.setVisibility(View.GONE);
+
                     MovieListAdapter movieListAdapter = new MovieListAdapter(getActivity(), movieModelResultList);
                     popularMovieRecyclerView.setAdapter(movieListAdapter);
-
-                    // animasi
-//                    LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(MovieListFragment.this.getContext(), R.anim.layout_slide_right);
-
-//                    popularMovieRecyclerView.setLayoutAnimation(controller);
-//                    popularMovieRecyclerView.scheduleLayoutAnimation();
 
                 }
 
@@ -75,7 +84,18 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-                Toast.makeText(MovieListFragment.this.getContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    movieListLayout.setVisibility(View.GONE);
+                    internetLayout.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(getContext(), "this is an actual network failure :(", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
+                    // todo log to some central bug tracking service
+                }
+
             }
         });
 
@@ -84,25 +104,37 @@ public class MovieListFragment extends Fragment {
         movieModelTopRatedCall.enqueue(new Callback<MovieModel>() {
             @Override
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
+
+
+
+
                 MovieModel movieModel = response.body();
 
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
+
+                    movieListLayout.setVisibility(View.VISIBLE);
+                    internetLayout.setVisibility(View.GONE);
+
                     MovieTopRatedAdapter movieTopRatedAdapter = new MovieTopRatedAdapter(getActivity(), movieModelResultList);
                     topRatedMovieRecyclerView.setAdapter(movieTopRatedAdapter);
 
-                    // animasi
-//                    LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(MovieListFragment.this.getContext(), R.anim.layout_slide_right);
-//
-//                    topRatedMovieRecyclerView.setLayoutAnimation(controller);
-//                    topRatedMovieRecyclerView.scheduleLayoutAnimation();
                 }
 
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-                Toast.makeText(MovieListFragment.this.getContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    movieListLayout.setVisibility(View.GONE);
+                    internetLayout.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(getContext(), "this is an actual network failure :(", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -112,18 +144,17 @@ public class MovieListFragment extends Fragment {
         movieModelRecomended.enqueue(new Callback<MovieModel>() {
             @Override
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
+
                 MovieModel movieModel = response.body();
 
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
+
+                    movieListLayout.setVisibility(View.VISIBLE);
+                    internetLayout.setVisibility(View.GONE);
+
                     MovieRecomendedAdapter movieRecomendedAdapter = new MovieRecomendedAdapter(getActivity(), movieModelResultList);
                     recomendedRecyclerView.setAdapter(movieRecomendedAdapter);
-
-                    // animasi
-//                    LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(MovieListFragment.this.getContext(), R.anim.layout_slide_right);
-
-//                    popularMovieRecyclerView.setLayoutAnimation(controller);
-//                    popularMovieRecyclerView.scheduleLayoutAnimation();
 
                 }
 
@@ -131,7 +162,17 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-                Toast.makeText(MovieListFragment.this.getContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    movieListLayout.setVisibility(View.GONE);
+                    internetLayout.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(getContext(), "this is an actual network failure :(", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
