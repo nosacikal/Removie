@@ -1,22 +1,18 @@
 package com.apps.nosacikal.removie;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.apps.nosacikal.removie.Adapter.MovieSearchAdapter;
@@ -44,9 +40,11 @@ import retrofit2.Response;
 public class SearchMovieFragment extends Fragment {
 
 
+    private ProgressDialog progress;
+
     private EditText queryEditText;
 
-    private Button querySearchButton;
+    private ImageButton querySearchButton;
 
     private RecyclerView resultRecyclerView;
 
@@ -59,6 +57,12 @@ public class SearchMovieFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.search_movie_fragment, container, false);
+
+        // progress dialog
+        progress = new ProgressDialog(getContext());
+        progress.setCancelable(false);
+        progress.setMessage("Loading ...");
+        progress.show();
 
         // disable keyboard waktu run app
         Objects.requireNonNull(getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -86,6 +90,8 @@ public class SearchMovieFragment extends Fragment {
 
                 if (source.equals("movie")) {
                     MovieModel movieResponse = new Gson().fromJson(result, MovieModel.class);
+
+                    progress.dismiss();
 
                     if (movieResponse != null) {
                         List<MovieModelResult> movieResponseResults = movieResponse.getResults();
@@ -131,6 +137,8 @@ public class SearchMovieFragment extends Fragment {
                             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
                                 MovieModel movieResponse = response.body();
 
+                                progress.dismiss();
+
                                 if (movieResponse != null) {
                                     List<MovieModelResult> movieResponseResults = movieResponse.getResults();
 
@@ -149,7 +157,8 @@ public class SearchMovieFragment extends Fragment {
 
                             @Override
                             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-
+                                progress.dismiss();
+                                Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
                             }
                         });
 

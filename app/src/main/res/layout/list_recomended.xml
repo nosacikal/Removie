@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.flaviofaria.kenburnsview.KenBurnsView
+        <ImageView
             android:id="@+id/recomended_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_350"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/backdrop" />
@@ -30,9 +30,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
+                android:lines="1"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_24"
+                android:textSize="@dimen/sp_20"
                 tools:text="Toy Story 4" />
 
             <LinearLayout

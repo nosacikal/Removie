@@ -51,11 +51,13 @@ public class MovieTopRatedAdapter extends RecyclerView.Adapter<MovieTopRatedView
 
         String title = movieModelResult.getTitle();
 
-        if (title.length() > 20) {
-            movieTopRatedViewHolder.topRatedTitle.setText(title.substring(0, 22) + "...");
-        } else {
-            movieTopRatedViewHolder.topRatedTitle.setText(title);
-        }
+//        if (title.length() > 20) {
+//            movieTopRatedViewHolder.topRatedTitle.setText(title.substring(0, 22) + "...");
+//        } else {
+//            movieTopRatedViewHolder.topRatedTitle.setText(title);
+//        }
+
+        movieTopRatedViewHolder.topRatedTitle.setText(title);
 
         // on click ke detail movie
         movieTopRatedViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -31,6 +31,7 @@
         android:layout_marginTop="@dimen/dp_10"
         android:fontFamily="@font/roboto_black"
         android:textColor="@android:color/white"
+        android:lines="1"
         android:textSize="@dimen/sp_16"
         tools:text="Rim Of The World" />
 

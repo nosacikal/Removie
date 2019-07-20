@@ -51,11 +51,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListViewHolder> 
 
         String title = movieModelResult.getTitle();
 
-        if (title.length() > 20) {
-            movieListViewHolder.popularTitle.setText(title.substring(0, 22) + "...");
-        } else {
-            movieListViewHolder.popularTitle.setText(title);
-        }
+//        if (title.length() > 20) {
+//            movieListViewHolder.popularTitle.setText(title.substring(0, 22) + "...");
+//        } else {
+//            movieListViewHolder.popularTitle.setText(title);
+//        }
+
+        movieListViewHolder.popularTitle.setText(title);
 
         movieListViewHolder.voteAverage.setText(Double.toString(movieModelResult.getVote_average()) + " / 10");
 

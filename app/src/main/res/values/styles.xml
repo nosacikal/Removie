@@ -9,9 +9,9 @@
     </style>
 
     <style name="SearchEditText">
-        <item name="colorControlNormal">#FFFFFF</item>
-        <item name="colorControlActivated">#FFFFFF</item>
-        <item name="colorControlHighlight">#FFFFFF</item>
+        <item name="colorControlNormal">#73FFFFFF</item>
+        <item name="colorControlActivated">#73FFFFFF</item>
+        <item name="colorControlHighlight">#73FFFFFF</item>
     </style>
 
     <style name="AppTheme.Splashscreen">

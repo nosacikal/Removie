@@ -9,8 +9,12 @@
     <string name="release">Release</string>
     <string name="cast">Cast</string>
     <string name="top_rated">Top Rated</string>
-    <string name="search_title">Search Title</string>
+    <string name="search_title">Search Movie Title</string>
     <string name="search">Search</string>
     <string name="find_movie_title">Find movie title</string>
     <string name="favorite_movie">Favorite Movie</string>
+    <string name="title_movie">Title : </string>
+    <string name="running_time">Running Time : </string>
+    <string name="release_date">Release Date :</string>
+    <string name="language">Language :</string>
 </resources>

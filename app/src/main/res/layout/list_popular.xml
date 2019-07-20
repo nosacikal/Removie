@@ -29,6 +29,7 @@
         android:layout_width="@dimen/dp_200"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
+        android:lines="1"
         android:fontFamily="@font/roboto_black"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_16"

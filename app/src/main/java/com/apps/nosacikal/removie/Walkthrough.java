@@ -39,19 +39,8 @@ public class Walkthrough extends OnboarderActivity implements OnboarderPageChang
         List<OnboarderPage> pages = Arrays.asList(
                 new OnboarderPage.Builder()
                         .title("Popular Movie")
-                        .description("Android 1.6")
-                        .imageResourceId(R.drawable.image)
-                        .backgroundColor(R.color.background)
-                        .titleColor(R.color.white)
-                        .descriptionColor(R.color.white)
-                        .multilineDescriptionCentered(true)
-                        .build(),
-
-
-                new OnboarderPage.Builder()
-                        .title("Oreo")
-                        .description("Android 8.0")
-                        .imageResourceId(R.drawable.image)
+                        .description("You can find movies that are currently popular")
+                        .imageResourceId(R.drawable.popular)
                         .backgroundColor(R.color.background)
                         .titleColor(R.color.white)
                         .descriptionColor(R.color.white)
@@ -59,9 +48,19 @@ public class Walkthrough extends OnboarderActivity implements OnboarderPageChang
                         .build(),
 
                 new OnboarderPage.Builder()
-                        .title("Oreo")
-                        .description("Android 8.0")
-                        .imageResourceId(R.drawable.image)
+                        .title("Top Rated Movie")
+                        .description("You can see movies that are top rated")
+                        .imageResourceId(R.drawable.toprated)
+                        .backgroundColor(R.color.background)
+                        .titleColor(R.color.white)
+                        .descriptionColor(R.color.white)
+                        .multilineDescriptionCentered(true)
+                        .build(),
+
+                new OnboarderPage.Builder()
+                        .title("Search Movie")
+                        .description("You can search for movies that you want")
+                        .imageResourceId(R.drawable.search_movie)
                         .backgroundColor(R.color.background)
                         .titleColor(R.color.white)
                         .descriptionColor(R.color.white)
@@ -87,7 +86,6 @@ public class Walkthrough extends OnboarderActivity implements OnboarderPageChang
 
     @Override
     protected void onSkipButtonPressed() {
-
         super.onSkipButtonPressed();
     }
 

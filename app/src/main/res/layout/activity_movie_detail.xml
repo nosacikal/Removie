@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.flaviofaria.kenburnsview.KenBurnsView
+        <ImageView
             android:id="@+id/movie_detail_backdrop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +89,6 @@
                 android:gravity="center"
                 android:src="@drawable/ic_favorite_border" />
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -134,6 +133,170 @@
                 android:textSize="@dimen/sp_18"
                 tools:text="Add Favorite" />
 
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:background="#407f8c8d" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_8">
+
+
+            <ImageView
+                android:id="@+id/movie_detail_poster"
+                android:layout_width="@dimen/dp_136"
+                android:layout_height="@dimen/dp_200"
+                tools:src="@drawable/image"
+                tools:ignore="ContentDescription"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--original title-->
+                <LinearLayout
+                    android:id="@+id/movie_detail_original_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/dp_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_thin"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_8"
+                        android:text="@string/title_movie"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/movie_detail_original_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_regular"
+                        tools:text="Rim Of The World Rim Of The World Rim Of The World"
+                        android:gravity="start" />
+
+                </LinearLayout>
+
+                <!--running time-->
+                <LinearLayout
+                    android:id="@+id/movie_detail_running_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/dp_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_thin"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_8"
+                        android:text="@string/running_time"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/movie_detail_running"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_regular"
+                        tools:text="120 Minutes"
+                        android:gravity="start" />
+
+                </LinearLayout>
+
+                <!--release date-->
+                <LinearLayout
+                    android:id="@+id/movie_detail_release_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/dp_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_thin"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_8"
+                        android:text="@string/release_date"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/movie_detail_release"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_regular"
+                        tools:text="31-06-2019"
+                        android:gravity="start" />
+
+                </LinearLayout>
+
+                <!--language-->
+                <LinearLayout
+                    android:id="@+id/movie_detail_language_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/dp_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_thin"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_8"
+                        android:text="@string/language"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/movie_detail_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:fontFamily="@font/roboto_regular"
+                        tools:text="en"
+                        android:gravity="start" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

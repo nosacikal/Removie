@@ -1,5 +1,6 @@
 package com.apps.nosacikal.removie;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,6 @@ import com.apps.nosacikal.removie.Models.MovieModel;
 import com.apps.nosacikal.removie.Models.MovieModelResult;
 import com.apps.nosacikal.removie.Utils.ConnectivityHelper;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,12 +38,14 @@ import retrofit2.Response;
 
 public class MovieListFragment extends Fragment {
 
+    private ProgressDialog progress;
+
     private LinearLayout movieListLayout;
     private LinearLayout internetLayout;
 
     private RecyclerView popularMovieRecyclerView;
     private RecyclerView topRatedMovieRecyclerView;
-    private RecyclerView recomendedRecyclerView;
+    private RecyclerView recommendedRecyclerView;
 
     @Nullable
     @Override
@@ -56,11 +58,17 @@ public class MovieListFragment extends Fragment {
         topRatedMovieRecyclerView = view.findViewById(R.id.toprated_recycler_view);
         topRatedMovieRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        recomendedRecyclerView = view.findViewById(R.id.recomended_recycler_view);
-        recomendedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recommendedRecyclerView = view.findViewById(R.id.recomended_recycler_view);
+        recommendedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         movieListLayout = view.findViewById(R.id.movie_list_layout);
         internetLayout = view.findViewById(R.id.internet_layout);
+
+        // progress dialog
+        progress = new ProgressDialog(getContext());
+        progress.setCancelable(false);
+        progress.setMessage("Loading ...");
+        progress.show();
 
 
         if (ConnectivityHelper.isConnectedToNetwork(Objects.requireNonNull(getContext()))) {
@@ -82,6 +90,8 @@ public class MovieListFragment extends Fragment {
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
                 MovieModel movieModel = response.body();
 
+                progress.dismiss();
+
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
 
@@ -95,6 +105,7 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
+                progress.dismiss();
                 Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
             }
         });
@@ -106,6 +117,8 @@ public class MovieListFragment extends Fragment {
             public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
 
                 MovieModel movieModel = response.body();
+
+                progress.dismiss();
 
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
@@ -121,6 +134,7 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
+                progress.dismiss();
                 Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
             }
         });
@@ -134,6 +148,8 @@ public class MovieListFragment extends Fragment {
 
                 MovieModel movieModel = response.body();
 
+                progress.dismiss();
+
                 if (movieModel != null) {
                     List<MovieModelResult> movieModelResultList = movieModel.getResults();
 
@@ -141,7 +157,7 @@ public class MovieListFragment extends Fragment {
                     internetLayout.setVisibility(View.GONE);
 
                     MovieRecomendedAdapter movieRecomendedAdapter = new MovieRecomendedAdapter(getActivity(), movieModelResultList);
-                    recomendedRecyclerView.setAdapter(movieRecomendedAdapter);
+                    recommendedRecyclerView.setAdapter(movieRecomendedAdapter);
 
                 }
 
@@ -149,6 +165,7 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
+                progress.dismiss();
                 Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,5 +1,7 @@
 package com.apps.nosacikal.removie;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +33,6 @@ import com.apps.nosacikal.removie.Models.MovieImagesBackdropsAndPoster;
 import com.apps.nosacikal.removie.Models.MovieVideos;
 import com.apps.nosacikal.removie.Models.MovieVideosResults;
 import com.codewaves.youtubethumbnailview.ThumbnailLoader;
-import com.flaviofaria.kenburnsview.KenBurnsView;
-import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,12 +60,26 @@ import retrofit2.Response;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
+    private ProgressDialog progress;
+
     public static FavoriteDatabase db;
     private FavoriteEntitas favoriteEntitas;
 
-    List<FavoriteEntitas> favoriteEntitasList = new ArrayList<>();
+//    List<FavoriteEntitas> favoriteEntitasList = new ArrayList<>();
 
-    private KenBurnsView movieDetailBackdrop;
+    private ImageView movieDetailPoster;
+
+    private LinearLayout movieDetailOriginalTitleLayout;
+    private LinearLayout movieDetailRunningTimeLayout;
+    private LinearLayout movieDetailReleaseLayout;
+    private LinearLayout movieDetailLanguageLayout;
+
+    private TextView movieDetailOriginalTitle;
+    private TextView movieDetailRunningTime;
+    private TextView movieDetailRelease;
+    private TextView movieDetailLanguage;
+
+    private ImageView movieDetailBackdrop;
     private TextView movieDetailTitle;
     private TextView movieDetailGenres;
     private TextView movieDetailReleaseDate;
@@ -84,6 +99,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        // progress dialog
+        progress = new ProgressDialog(this);
+        progress.setCancelable(false);
+        progress.setMessage("Loading ...");
+        progress.show();
+
+
         final Intent intent = getIntent();
         final RetrofitService retrofitService = RetrofitClient.getClient().create(RetrofitService.class);
         ThumbnailLoader.initialize(BuildConfig.GOOGLE_CLOUD_API_KEY);
@@ -92,6 +114,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 FavoriteDatabase.class, "favorite")
                 .allowMainThreadQueries().build();
+
+        movieDetailPoster = findViewById(R.id.movie_detail_poster);
+
+        movieDetailOriginalTitleLayout = findViewById(R.id.movie_detail_original_title_layout);
+        movieDetailRunningTimeLayout = findViewById(R.id.movie_detail_running_layout);
+        movieDetailReleaseLayout = findViewById(R.id.movie_detail_release_layout);
+        movieDetailLanguageLayout = findViewById(R.id.movie_detail_language_layout);
+
+        movieDetailOriginalTitle = findViewById(R.id.movie_detail_original_title);
+        movieDetailRunningTime = findViewById(R.id.movie_detail_running);
+        movieDetailRelease = findViewById(R.id.movie_detail_release);
+        movieDetailLanguage = findViewById(R.id.movie_detail_language);
+
 
         movieDetailBackdrop = findViewById(R.id.movie_detail_backdrop);
         movieDetailTitle = findViewById(R.id.movie_detail_title);
@@ -111,9 +146,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
-        RandomTransitionGenerator generator = new RandomTransitionGenerator(1000, new DecelerateInterpolator());
-        movieDetailBackdrop.setTransitionGenerator(generator);
-
         if (intent != null && intent.getExtras() != null) {
             if (intent.getExtras().getString("id") != null) {
 
@@ -126,6 +158,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<MovieDetailModel> call, @NonNull Response<MovieDetailModel> response) {
                         final MovieDetailModel movieDetailModelResponse = response.body();
+
+                        progress.dismiss();
 
                         if (movieDetailModelResponse != null) {
 
@@ -192,6 +226,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<MovieImages> call, @NonNull Response<MovieImages> response) {
                         MovieImages movieImages = response.body();
+
+                        progress.dismiss();
 
                         if (movieImages != null) {
                             ArrayList<MovieImagesBackdropsAndPoster> movieImagesBackdropsAndPosterArrayList = new ArrayList<>();
@@ -274,10 +310,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void prepareMovieDetail(MovieDetailModel movieDetailModelResponse) {
 
+        String posterPath = movieDetailModelResponse.getPoster_path();
         String backdropPath = movieDetailModelResponse.getBackdrop_path();
         String title = movieDetailModelResponse.getTitle();
+        String originalTitle = movieDetailModelResponse.getOriginal_title();
+        String release = movieDetailModelResponse.getRelease_date();
+        String language = movieDetailModelResponse.getOriginal_language();
+
+
+        int runtime = movieDetailModelResponse.getRuntime();
+
 
         String voteAverage = Double.toString(movieDetailModelResponse.getVote_average());
 
@@ -287,16 +332,72 @@ public class MovieDetailActivity extends AppCompatActivity {
         String overview = movieDetailModelResponse.getOverview();
 
 
+        // poster
+        if (posterPath != null) {
+            Picasso.with(this).load(posterPath).into(movieDetailPoster);
+            movieDetailPoster.setVisibility(View.VISIBLE);
+        } else {
+            movieDetailPoster.setVisibility(View.GONE);
+        }
+
+        // backdrop
         Picasso.with(this).load(backdropPath).into(movieDetailBackdrop);
 
+        // title
         if (title != null && title.length() > 0) {
             movieDetailTitle.setText(title);
         }
 
+        // original title
+        if (originalTitle != null) {
+            if (originalTitle.length() > 0) {
+                movieDetailOriginalTitle.setText(originalTitle);
+                movieDetailOriginalTitleLayout.setVisibility(View.VISIBLE);
+            } else {
+                movieDetailOriginalTitleLayout.setVisibility(View.GONE);
+            }
+        } else {
+            movieDetailOriginalTitleLayout.setVisibility(View.GONE);
+        }
+
+        // release
+        if (release != null) {
+            if (release.length() > 0) {
+                movieDetailRelease.setText(releaseDate);
+                movieDetailReleaseLayout.setVisibility(View.VISIBLE);
+            } else {
+                movieDetailReleaseLayout.setVisibility(View.GONE);
+            }
+        } else {
+            movieDetailReleaseLayout.setVisibility(View.GONE);
+        }
+
+        // language
+        if (language != null) {
+            if (language.length() > 0) {
+                movieDetailLanguage.setText(language);
+                movieDetailLanguageLayout.setVisibility(View.VISIBLE);
+            } else {
+                movieDetailLanguageLayout.setVisibility(View.GONE);
+            }
+        } else {
+            movieDetailLanguageLayout.setVisibility(View.GONE);
+        }
+
+        // runtime
+        if (runtime != 0) {
+            movieDetailRunningTime.setText(String.valueOf(runtime) + " minutes");
+            movieDetailRunningTimeLayout.setVisibility(View.VISIBLE);
+        } else {
+            movieDetailRunningTimeLayout.setVisibility(View.GONE);
+        }
+
+        // vote average
         if (voteAverage != null) {
             movieDetailVoteAverage.setText(voteAverage + "/10");
         }
 
+        // genre
         if (movieDetailGenresList != null && movieDetailGenresList.size() > 0) {
 
             StringBuilder builder = new StringBuilder();

@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 
 public class MovieRecomendedViewHolder extends RecyclerView.ViewHolder {
 
-    public KenBurnsView recomendedImage;
+    public ImageView recomendedImage;
     public TextView recomendedTitle;
     public TextView recomendedVoteAverage;
 
@@ -33,8 +33,8 @@ public class MovieRecomendedViewHolder extends RecyclerView.ViewHolder {
         recomendedTitle = itemView.findViewById(R.id.recomended_title);
         recomendedVoteAverage = itemView.findViewById(R.id.recomended_vote_average);
 
-        RandomTransitionGenerator generator = new RandomTransitionGenerator(1000, new DecelerateInterpolator());
-        recomendedImage.setTransitionGenerator(generator);
+//        RandomTransitionGenerator generator = new RandomTransitionGenerator(1000, new DecelerateInterpolator());
+//        recomendedImage.setTransitionGenerator(generator);
     }
 
     public void setRecomendedImage(Context context, String posterUrl) {
