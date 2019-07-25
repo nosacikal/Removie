@@ -39,12 +39,9 @@ import retrofit2.Response;
 
 public class SearchMovieFragment extends Fragment {
 
-
     private ProgressDialog progress;
 
     private EditText queryEditText;
-
-    private ImageButton querySearchButton;
 
     private RecyclerView resultRecyclerView;
 
@@ -58,20 +55,13 @@ public class SearchMovieFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.search_movie_fragment, container, false);
 
-        // progress dialog
-        progress = new ProgressDialog(getContext());
-        progress.setCancelable(false);
-        progress.setMessage("Loading ...");
-        progress.show();
-
         // disable keyboard waktu run app
         Objects.requireNonNull(getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         queryEditText = view.findViewById(R.id.query_edit_text);
-        querySearchButton = view.findViewById(R.id.query_search_button);
+        ImageButton querySearchButton = view.findViewById(R.id.query_search_button);
         resultRecyclerView = view.findViewById(R.id.result_recycler_view);
 
-//        resultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         resultRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         Paper.init(Objects.requireNonNull(getContext()));
@@ -91,15 +81,12 @@ public class SearchMovieFragment extends Fragment {
                 if (source.equals("movie")) {
                     MovieModel movieResponse = new Gson().fromJson(result, MovieModel.class);
 
-                    progress.dismiss();
-
                     if (movieResponse != null) {
                         List<MovieModelResult> movieResponseResults = movieResponse.getResults();
 
                         movieSearchAdapter = new MovieSearchAdapter(getActivity(), movieResponseResults);
 
                         resultRecyclerView.setAdapter(movieSearchAdapter);
-
 
                         // store result ke offline database (paper database)
                         Paper.book().write("cache", new Gson().toJson(movieResponse));
@@ -129,6 +116,12 @@ public class SearchMovieFragment extends Fragment {
                         // ambil query dan buang spasi
                         String finalQuery = query.replaceAll(" ", "+");
 
+                        // progress dialog
+                        progress = new ProgressDialog(getContext());
+                        progress.setCancelable(false);
+                        progress.setMessage("Loading ...");
+                        progress.show();
+
                         // fetch data dari retrofit
                         Call<MovieModel> movieResponseCall = retrofitService.getMoviesByQuery(BuildConfig.THE_MOVIE_DB_API_KEY, finalQuery);
 
@@ -157,15 +150,12 @@ public class SearchMovieFragment extends Fragment {
 
                             @Override
                             public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
-                                progress.dismiss();
                                 Toast.makeText(getContext(), "Check your connection", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 }
-
-
             }
         });
 

@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -65,7 +64,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     public static FavoriteDatabase db;
     private FavoriteEntitas favoriteEntitas;
 
-//    List<FavoriteEntitas> favoriteEntitasList = new ArrayList<>();
 
     private ImageView movieDetailPoster;
 
