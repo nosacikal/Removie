@@ -10,6 +10,7 @@ public class SharePref {
     SharedPreferences pref;
     SharedPreferences.Editor prefEditor;
 
+    // tag
     private static final String SHAREPREF = "walkthrough";
     private static final String FIRSTLAUNCH = "firstLaunch";
 

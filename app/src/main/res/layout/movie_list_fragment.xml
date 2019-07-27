@@ -22,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:src="@drawable/no_internet" />
+                android:src="@drawable/no_internet"
+                android:contentDescription="@string/no_internet" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                 android:layout_margin="@dimen/dp_8"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
-                android:text="Whoops !"
+                android:text="@string/whoops"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_30" />
 
@@ -40,7 +41,7 @@
                 android:layout_margin="@dimen/dp_8"
                 android:fontFamily="@font/roboto_thin"
                 android:gravity="center"
-                android:text="No internet connection found. check your connection or try again"
+                android:text="@string/no_internet_connection_found_check_your_connection_or_try_again"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
 
@@ -94,7 +95,8 @@
                 android:id="@+id/toprated_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_24" />
+                android:layout_marginStart="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/dp_16"/>
 
         </LinearLayout>
 

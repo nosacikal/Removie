@@ -70,7 +70,7 @@
         android:layout_below="@id/shadow"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/dp_80"
-        android:text="No more video result found.."
+        android:text="@string/no_more_video_result_found"
         android:textColor="@android:color/white"
         android:textStyle="bold|italic"
         android:visibility="gone" />

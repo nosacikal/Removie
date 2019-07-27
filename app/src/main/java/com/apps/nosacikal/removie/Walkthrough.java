@@ -33,7 +33,6 @@ public class Walkthrough extends OnboarderActivity implements OnboarderPageChang
             sharePref.setFirstTimeLaunch(false);
             startActivity(new Intent(Walkthrough.this, BottomNavigationActivity.class));
             finish();
-
         }
 
         List<OnboarderPage> pages = Arrays.asList(

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            tools:src="@drawable/backdrop" />
+            android:contentDescription="@string/backdrop" />
 
         <TextView
             android:id="@+id/movie_detail_title"
@@ -29,8 +29,7 @@
             android:layout_marginBottom="@dimen/dp_8"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_24"
-            tools:text="Re: Zero kara Hajimeru Isekai Seikatsu - Memory Snow" />
+            android:textSize="@dimen/sp_24" />
 
         <TextView
             android:id="@+id/movie_detail_genres"
@@ -77,7 +76,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star"
+                android:contentDescription="@string/rating" />
 
             <ImageButton
                 android:id="@+id/movie_detail_favorite"
@@ -87,7 +87,8 @@
                 android:layout_weight="1"
                 android:background="@color/background"
                 android:gravity="center"
-                android:src="@drawable/ic_favorite_border" />
+                android:src="@drawable/ic_favorite_border"
+                android:contentDescription="@string/favorite_button" />
 
         </LinearLayout>
 
@@ -155,7 +156,6 @@
                 android:id="@+id/movie_detail_poster"
                 android:layout_width="@dimen/dp_136"
                 android:layout_height="@dimen/dp_200"
-                tools:src="@drawable/image"
                 tools:ignore="ContentDescription"
                 android:visibility="gone"/>
 

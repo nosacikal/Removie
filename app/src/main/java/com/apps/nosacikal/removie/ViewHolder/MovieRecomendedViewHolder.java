@@ -33,8 +33,6 @@ public class MovieRecomendedViewHolder extends RecyclerView.ViewHolder {
         recomendedTitle = itemView.findViewById(R.id.recomended_title);
         recomendedVoteAverage = itemView.findViewById(R.id.recomended_vote_average);
 
-//        RandomTransitionGenerator generator = new RandomTransitionGenerator(1000, new DecelerateInterpolator());
-//        recomendedImage.setTransitionGenerator(generator);
     }
 
     public void setRecomendedImage(Context context, String posterUrl) {

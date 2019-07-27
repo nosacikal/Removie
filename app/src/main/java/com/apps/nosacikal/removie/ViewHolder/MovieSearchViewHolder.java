@@ -22,9 +22,6 @@ import com.squareup.picasso.Picasso;
 
 public class MovieSearchViewHolder extends RecyclerView.ViewHolder {
 
-//    private KenBurnsView posterImageView;
-//    public AppCompatTextView posterTitle;
-
     private KenBurnsView searchImageResult;
     public TextView searchTitleResult;
     public TextView searchVoteAverage;

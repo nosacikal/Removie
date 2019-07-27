@@ -17,4 +17,13 @@
     <string name="running_time">Running Time : </string>
     <string name="release_date">Release Date :</string>
     <string name="language">Language :</string>
+    <string name="favorite_button">favorite button</string>
+    <string name="rating">rating</string>
+    <string name="backdrop">backdrop</string>
+    <string name="logo">logo</string>
+    <string name="no_more_video_result_found">No more video result found..</string>
+    <string name="poster">poster</string>
+    <string name="no_internet">no internet</string>
+    <string name="whoops">Whoops !</string>
+    <string name="no_internet_connection_found_check_your_connection_or_try_again">No internet connection found. check your connection or try again</string>
 </resources>
