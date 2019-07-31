@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\nosacikal\\AndroidStudioProjects\\removie_key.jks')
-            storePassword 'k4m1luz4'
+            storeFile file('D:\\kuliah\\semester6\\AKB\\UAS\\asset\\removie_ks.jks')
+            storePassword 'nosacikal12'
             keyAlias = 'removie'
-            keyPassword 'k4m1luz4'
+            keyPassword 'nosacikal12'
         }
     }
     compileSdkVersion 28
